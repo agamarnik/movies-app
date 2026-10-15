@@ -1,3 +1,4 @@
+import MovieCard from "@/components/MovieCard";
 import { getMovies } from "@/lib/tmdb";
 
 export default async function Home({
@@ -11,12 +12,10 @@ export default async function Home({
   const movies = await getMovies(genre);
 
   return (
-    <ul>
+    <div>
       {movies.map((movie) => ( 
-        <li key={movie.id}>
-          {movie.title}
-        </li>
+        <MovieCard key={movie.id} movie={movie} />
       ))}
-    </ul>
+    </div>
   )
 }

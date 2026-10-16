@@ -9,3 +9,6 @@ export type Movie = {
 export type DiscoverResponse = {
     results: Movie[];
 }
+
+export type SortKey = "rating" | "release_date" | "title";
+export type SortDirection = "asc" | "desc";

@@ -1,5 +1,6 @@
 import type { Movie } from "@/lib/types";
 import Image from "next/image";
+import styles from "./MovieCard.module.css";
 
 type MovieCardProps = {
     movie: Movie;
@@ -7,12 +8,18 @@ type MovieCardProps = {
 
 export default function MovieCard({ movie }: MovieCardProps) {
     const posterUrl = movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : null;
-    
+
     return (
-        <article>
-            {posterUrl ? <Image src={posterUrl} alt={movie.title} width={500} height={750} /> : <div> No Poster</div> }
-            <h2>{movie.title}</h2>
-            <p>Vote Average: {movie.vote_average.toFixed(1)}</p>
+        <article className={styles.card}>
+            {posterUrl ? ( 
+                <Image src={posterUrl} alt={movie.title} width={500} height={750} className={styles.poster} /> 
+            ) : (
+                <div className={styles.noPoster}>No Poster</div> 
+            )}
+            <div className={styles.info}>
+                <h2>{movie.title}</h2>
+                <p>Vote Average: {movie.vote_average.toFixed(1)}</p>
+            </div>
         </article>
     );
 }

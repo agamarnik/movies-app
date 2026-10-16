@@ -1,0 +1,27 @@
+.poster {
+    width: 100%;
+    height: auto;
+}
+
+.noPoster {
+    aspect-ratio: 2 / 3;
+    display: grid;
+    place-items: center;
+    background: #333;
+}
+
+.card {
+    border-radius: 8px;
+    transition: transform 150ms ease, box-shadow 150ms ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.info {
+    font-size: 1rem;
+    padding: 0.5rem;
+}

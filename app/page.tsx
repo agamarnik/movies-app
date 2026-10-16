@@ -1,5 +1,6 @@
 import MovieCard from "@/components/MovieCard";
 import { getMovies } from "@/lib/tmdb";
+import styles from "./page.module.css";
 
 export default async function Home({
   searchParams,
@@ -12,10 +13,13 @@ export default async function Home({
   const movies = await getMovies(genre);
 
   return (
-    <div>
-      {movies.map((movie) => ( 
-        <MovieCard key={movie.id} movie={movie} />
-      ))}
-    </div>
+    <main className={styles.main}>
+      <h1 className={styles.title}>Movies</h1>
+      <div className={styles.grid}>
+        {movies.map((movie) => ( 
+          <MovieCard key={movie.id} movie={movie} />
+        ))}
+      </div>
+    </main>
   )
 }

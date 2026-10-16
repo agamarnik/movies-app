@@ -16,8 +16,8 @@ export default async function Home({
     <main className={styles.main}>
       <h1 className={styles.title}>Movies</h1>
       <div className={styles.grid}>
-        {movies.map((movie) => ( 
-          <MovieCard key={movie.id} movie={movie} />
+        {movies.map((movie, index) => ( 
+          <MovieCard key={movie.id} movie={movie} eager={index < 6} />
         ))}
       </div>
     </main>

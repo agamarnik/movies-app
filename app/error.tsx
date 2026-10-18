@@ -7,15 +7,15 @@ type ErrorPageProps = {
     retry: () => void;
 };
 
-export default function ErrorPage({error, retry }: ErrorPageProps) {
+export default function ErrorPage({ error, retry }: ErrorPageProps) {
     useEffect(() => {
         console.error(error);
     }, [error]);
 
     return (
-        <div className={styles.main}>
-            <h1>{"Couldn't load movies"}</h1>
+        <main className={styles.main}>
+            <h1 className={styles.title}>{"Couldn't load movies"}</h1>
             <button onClick={() => retry()}>Try again</button>
-        </div>
+        </main>
     );
 }

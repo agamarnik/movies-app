@@ -36,9 +36,8 @@ describe("sortMovies", () => {
     });
 
     it("doesn't mutate the original array", () => {
-        const before = movies.map((m) => m.title);
         sortMovies(movies, "rating", "asc");
         const after = movies.map((m) => m.title);
-        expect(after).toEqual(before);
+        expect(after).toEqual(["Alien", "The Godfather", "Casablanca"]);
     });
 });

@@ -22,11 +22,15 @@ export default async function Home({
     <main className={styles.main}>
       <h1 className={styles.title}>Movies</h1>
       <Controls sort={sort} dir={dir} />
-      <div className={styles.grid}>
-        {sortedMovies.map((movie, index) => ( 
-          <MovieCard key={movie.id} movie={movie} eager={index < 6} />
-        ))}
-      </div>
-    </main>
+      {sortedMovies.length > 0 ? (
+        <div className={styles.grid}>
+          {sortedMovies.map((movie, index) => ( 
+            <MovieCard key={movie.id} movie={movie} eager={index < 6} />
+          ))}
+        </div>
+      ) : (
+        <p className={styles.noResults}>No movies found. Try a different genre.</p>
+      )}
+      </main>
   )
 }

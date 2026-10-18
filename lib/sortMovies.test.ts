@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import type { Movie } from "./types";
-import { sortMovies } from "./sortMovies";
+import { sortMovies, isSortKey, isSortDirection } from "./sortMovies";
+
 
 function makeMovie(overrides: Partial<Movie> = {}): Movie {
     return {
@@ -39,5 +40,32 @@ describe("sortMovies", () => {
         sortMovies(movies, "rating", "asc");
         const after = movies.map((m) => m.title);
         expect(after).toEqual(["Alien", "The Godfather", "Casablanca"]);
+    });
+});
+
+describe("isSortKey", () => {
+    it("accepts a valid sort key", () => {
+        expect(isSortKey("rating")).toBe(true);
+        expect(isSortKey("release_date")).toBe(true);
+        expect(isSortKey("title")).toBe(true);
+    });
+    
+    it("rejects an invalid sort key", () => {
+        expect(isSortKey("banana")).toBe(false);
+        expect(isSortKey(undefined)).toBe(false);
+        expect(isSortKey(["rating", "title"])).toBe(false);
+        expect(isSortKey("Rating")).toBe(false);
+    });
+});  
+
+describe("isSortDirection", () => {
+    it("accepts a valid sort direction", () => {
+        expect(isSortDirection("asc")).toBe(true);
+        expect(isSortDirection("desc")).toBe(true);
+    });
+
+    it("rejects an invalid sort direction", () => {
+        expect(isSortDirection(undefined)).toBe(false);
+        expect(isSortDirection("Ascending")).toBe(false);
     });
 });

@@ -10,5 +10,11 @@ export type DiscoverResponse = {
     results: Movie[];
 }
 
-export type SortKey = "rating" | "release_date" | "title";
-export type SortDirection = "asc" | "desc";
+export const SORT_KEYS = ["rating", "release_date", "title"] as const;
+export type SortKey = (typeof SORT_KEYS)[number];
+
+export const SORT_DIRECTIONS = ["asc", "desc"] as const;
+export type SortDirection = (typeof SORT_DIRECTIONS)[number];
+
+export const DEFAULT_SORT: SortKey = "rating";
+export const DEFAULT_DIR: SortDirection = "desc";

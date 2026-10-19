@@ -21,10 +21,13 @@ export default async function Home({
   ]);
 
   const sortedMovies = sortMovies(movies, sort, dir);
+  
+  const selectedGenre = genres.find((g) => String(g.id) === genre);
+  const heading = selectedGenre ? `${selectedGenre.name} movies` : "Movies";
 
   return (
     <main className={styles.main}>
-      <h1 className={styles.title}>Movies</h1>
+      <h1 className={styles.title}>{heading}</h1>
       <Controls sort={sort} dir={dir} genre={genre} genres={genres} />
       {sortedMovies.length > 0 ? (
         <div className={styles.grid}>

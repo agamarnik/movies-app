@@ -25,7 +25,7 @@ export default async function Home({
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>Movies</h1>
-      <Controls sort={sort} dir={dir} />
+      <Controls sort={sort} dir={dir} genre={genre} genres={genres} />
       {sortedMovies.length > 0 ? (
         <div className={styles.grid}>
           {sortedMovies.map((movie, index) => ( 

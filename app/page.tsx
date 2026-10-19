@@ -1,5 +1,5 @@
 import MovieCard from "@/components/MovieCard";
-import { getMovies } from "@/lib/tmdb";
+import { getGenres, getMovies } from "@/lib/tmdb";
 import styles from "./page.module.css";
 import { isSortKey, isSortDirection, sortMovies } from "@/lib/sortMovies";
 import { DEFAULT_SORT, DEFAULT_DIR } from "@/lib/types";
@@ -15,7 +15,11 @@ export default async function Home({
   const sort = isSortKey(params.sort) ? params.sort : DEFAULT_SORT;
   const dir = isSortDirection(params.dir) ? params.dir : DEFAULT_DIR;
 
-  const movies = await getMovies(genre);
+  const [movies, genres] = await Promise.all([
+    getMovies(genre),
+    getGenres().catch((error) => { console.error(error); return []; }),
+  ]);
+
   const sortedMovies = sortMovies(movies, sort, dir);
 
   return (

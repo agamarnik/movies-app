@@ -6,9 +6,18 @@ export type Movie = {
     vote_average: number;
 }
 
+export type Genre = {
+    id: number;
+    name: string;
+}
+
 export type DiscoverResponse = {
     results: Movie[];
 }
+
+export type GenreListResponse = {
+  genres: Genre[];
+};
 
 export const SORT_KEYS = ["rating", "release_date", "title"] as const;
 export type SortKey = (typeof SORT_KEYS)[number];

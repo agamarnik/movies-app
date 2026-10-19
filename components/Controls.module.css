@@ -5,3 +5,9 @@
   align-items: center;
   margin-bottom: 1rem;
 }
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

@@ -60,13 +60,16 @@ export default function Controls({ sort, dir, genre, genres }: ControlsProps) {
     
     return (
         <div className={styles.controls}>
-            <label htmlFor="genre">Genre</label>
-            <select id="genre" value={optimisticGenre} onChange={handleGenreChange}>
-                <option value="">All genres</option>
-                {genres.map((g) => (
-                <option key={g.id} value={g.id}>{g.name}</option>
-                ))}
-            </select>
+            <div className={styles.field}>
+                <label htmlFor="genre">Genre</label>
+                <select id="genre" value={optimisticGenre} onChange={handleGenreChange}>
+                    <option value="">All genres</option>
+                    {genres.map((g) => (
+                        <option key={g.id} value={g.id}>{g.name}</option>
+                    ))}
+                </select>
+            </div>
+            <div className={styles.field}>
             <label htmlFor="sort">Sort by</label>
             <select id="sort" value={optimisticSort} onChange={handleSortChange}>
                 {SORT_OPTIONS.map((option) => (
@@ -75,6 +78,7 @@ export default function Controls({ sort, dir, genre, genres }: ControlsProps) {
                     </option>
                 ))}
             </select>
+            </div>
             <span aria-live="polite">{isPending ? "Updating…" : ""}</span>
         </div>
     );

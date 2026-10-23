@@ -1,5 +1,5 @@
 import MovieCard from "@/components/MovieCard";
-import { getGenres, getMovies } from "@/lib/tmdb";
+import { getGenres, getMovies, searchMovies } from "@/lib/tmdb";
 import styles from "./page.module.css";
 import { isSortKey, isSortDirection, sortMovies } from "@/lib/sortMovies";
 import { DEFAULT_SORT, DEFAULT_DIR } from "@/lib/types";
@@ -14,11 +14,13 @@ export default async function Home({
   const genre = typeof params.genre === "string" ? params.genre : null;
   const sort = isSortKey(params.sort) ? params.sort : DEFAULT_SORT;
   const dir = isSortDirection(params.dir) ? params.dir : DEFAULT_DIR;
+  const query = typeof params.query === "string" ? params.query : null;
 
   const [movies, genres] = await Promise.all([
-    getMovies(genre),
-    getGenres().catch((error) => { console.error(error); return []; }),
+      query ? searchMovies(query) : getMovies(genre),
+      getGenres().catch((error) => { console.error(error); return []; })
   ]);
+
 
   const sortedMovies = sortMovies(movies, sort, dir);
   
@@ -31,7 +33,7 @@ export default async function Home({
       <Controls sort={sort} dir={dir} genre={genre} genres={genres} />
       {sortedMovies.length > 0 ? (
         <div className={styles.grid}>
-          {sortedMovies.map((movie, index) => ( 
+          {movies.map((movie, index) => ( 
             <MovieCard key={movie.id} movie={movie} eager={index < 6} />
           ))}
         </div>

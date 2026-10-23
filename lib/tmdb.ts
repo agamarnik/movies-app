@@ -22,6 +22,12 @@ async function tmdbFetch<T>(path: string, params: Record<string, string> = {}): 
     return res.json();
 }
 
+export async function searchMovies(query: string): Promise<Movie[]> {
+    const data = await tmdbFetch<DiscoverResponse>("/search/movie", { query });
+
+    return data.results;
+}
+
 export async function getMovies(genre: string | null): Promise<Movie[]> { 
     const params: Record<string, string> = { "vote_count.gte": "100" }; // Exclude obscure movies with a few 10/10 votes, which distort rating sorts
 

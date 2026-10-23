@@ -1,6 +1,6 @@
 "use client";
 import type { SortKey, SortDirection, Genre } from "@/lib/types";
-import { type ChangeEvent, useTransition, useOptimistic } from "react";
+import { type ChangeEvent, useTransition, useOptimistic, FormEvent } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import styles from "./Controls.module.css";
 
@@ -9,6 +9,7 @@ type ControlsProps = {
   dir: SortDirection;
   genre: string | null;
   genres: Genre[];
+  query: string | null;
 };
 
 const SORT_OPTIONS: { label: string; sort: SortKey; dir: SortDirection }[] = [
@@ -20,7 +21,7 @@ const SORT_OPTIONS: { label: string; sort: SortKey; dir: SortDirection }[] = [
     { label: "Title (Z → A)", sort: "title", dir: "desc" },
 ];
 
-export default function Controls({ sort, dir, genre, genres }: ControlsProps) {
+export default function Controls({ sort, dir, genre, genres, query }: ControlsProps) {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isPending, startTransition] = useTransition();
@@ -57,6 +58,16 @@ export default function Controls({ sort, dir, genre, genres }: ControlsProps) {
             router.push(`/?${params.toString()}`, { scroll: false });
         });
     }
+
+    function handleSearch(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        const value = new FormData(e.currentTarget).get("query");
+        const params = new URLSearchParams(searchParams);
+        if (typeof value === "string" && value.trim()) params.set("query", value.trim());
+        else params.delete("query");
+        startTransition(() => router.push(`/?${params.toString()}`, { scroll: false }));
+    }
+
     
     return (
         <div className={styles.controls}>
@@ -79,6 +90,10 @@ export default function Controls({ sort, dir, genre, genres }: ControlsProps) {
                 ))}
             </select>
             </div>
+            <form className={styles.field} onSubmit={handleSearch} role="search">
+                <label htmlFor="query">Search</label>
+                <input id="query" name="query" type="search" defaultValue={query ?? ""} />
+            </form>
             <span aria-live="polite">{isPending ? "Updating…" : ""}</span>
         </div>
     );
